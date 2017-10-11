@@ -4,3 +4,42 @@ author: "Gabriele Chignoli"
 date: "10/9/2017"
 output: html_document
 ---
+
+## Exercise 1: Writing R functions
+
+All functions written for this assignment will be provided from the source file:
+```{r}
+source("functions.R")
+```
+  
+### Question 1a: filling in the blanks
+
+The codes below provide the results of the first filling.
+In order to verify the presence of numeric values in a certain column of the dataset and then to sum them all, an ```If``` condition was added to the function ```sum_column```:
+
+```{r}
+print(sum_column(iris, "Sepal.Length"))
+print(sum_column(iris, "Species"))
+print(sum_column(warpbreaks, "breaks"))
+```
+
+**Question 1b: a function with one argument and one return value**
+
+As a result of cheating on first filling by adding the built-in **R** ```sum()```, here we use a basic code to recreate a function which can do the sum for us. We test it using the code chunk below:
+
+```{r}
+print(my_sum(iris$Sepal.Length))
+print(my_sum(iris$Species))
+print(my_sum(warpbreaks$breaks))
+```
+
+We lately add this function to the first one.
+
+**Question 1c: a function with two arguments and one return value**
+
+```
+  print(sum_divided_by(iris$Sepal.Length, 12))
+print(sum_divided_by(iris$Species, 22))
+print(sum_divided_by(iris$Sepal.Length, "Not numeric"))
+print(sum_divided_by(warpbreaks$breaks, -12))
+```
