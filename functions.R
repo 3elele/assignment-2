@@ -70,3 +70,26 @@ sum_divided_by <- function(x, k) {
   ## NULL
   ## NULL
   ## [1] -126.6667
+
+#----------1d
+# Calculate the mean of a vector.
+#
+# ARGUMENTS:
+# x: a vector
+# 
+# RETURN VALUE:
+# if the vector contains numbers, returns its mean:
+# the sum all values divided by the vector length; otherwise, returns NULL
+my_mean <- function(v) {
+  mean <- NULL
+  if(is.numeric(v)) {
+    k <- length(v)
+    mean <- sum_divided_by(v, k)
+  }
+  return(mean)
+}
+#Write your own function my_mean to calculate the mean of a vector (the sum divided by the number of elements), making use of your function sum_divided_by, and not making use of the built-in functions that calculate the sum or the mean. It should return NULL for non-numeric vectors
+#It should give the output:
+  ## [1] 5.843333
+  ## NULL
+  ## [1] 28.14815
