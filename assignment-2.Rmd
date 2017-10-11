@@ -57,3 +57,19 @@ print(my_mean(iris$Sepal.Length))
 print(my_mean(iris$Species))
 print(my_mean(warpbreaks$breaks))
 ```
+
+## Exercise 2: Working with ggplot
+
+Here we'll work with the ```ggplot``` package and as we did earlier all functions and code will be provided in
+
+```{r}
+source("functions.R")
+```
+
+### Question 2a: creating violin plots
+
+We'll test this first question with the following chunk:
+
+```{r}
+print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
+```
