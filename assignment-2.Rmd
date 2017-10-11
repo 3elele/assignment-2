@@ -73,3 +73,14 @@ We'll test this first question with the following chunk:
 ```{r}
 print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
 ```
+
+### Question 2b:modifying plots
+
+This time we will just modify the last plot in order to add a main title and to change plot colours, thanks to the chunk you see here:
+
+```{r}
+p <- grouped_violin_plot(iris, "Sepal.Length", "Species")
+p <- p + ggplot2::geom_violin(fill = "green")
+p <- p + ggplot2::labs(title="Iris data")
+print(p)
+```
