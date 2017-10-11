@@ -50,6 +50,7 @@ print(sum_divided_by(warpbreaks$breaks, -12))
 
 ### Question 1d: one more function
 
+Last function we create for this exercise calculates the mean of a vector not cheating using the built-in ```mean()```. Chunk below show the result:
 
 ```{r}
 print(my_mean(iris$Sepal.Length))
