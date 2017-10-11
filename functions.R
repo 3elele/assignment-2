@@ -113,6 +113,6 @@ grouped_violin_plot <- function(d, var, grouping_var) {
   p <- ggplot2::ggplot(d, ggplot2::aes_string(y=var,
                                               x=grouping_var,
                                               fill=grouping_var))
-  p <- p + ggplot2::geom_violin()
+  p <- p + ggplot2::geom_violin() #Add Violin plot visualisation
   return(p)
 }
