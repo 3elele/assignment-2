@@ -105,6 +105,8 @@ difference_in_medians(iris, "Sepal.Width", "Species", "virginica", "virginica")
 
 ###Question 3b: writing a more generic function of the randomization (i.e., permutation) function
 
+This time we work on columns too but instead of using values in columns to obtain a result, we take all the column dataset and randomly replace them.
+
 ```{r}
 iris$Sepal.Width[1:10]
 if(!exists(".Random.seed")) set.seed(NULL)
