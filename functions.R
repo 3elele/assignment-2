@@ -94,7 +94,7 @@ my_mean <- function(v) {
   ## NULL
   ## [1] 28.14815
 
-##----------
+##----------2a
 # Return a violin plot.
 #
 # ARGUMENTS:
@@ -116,3 +116,30 @@ grouped_violin_plot <- function(d, var, grouping_var) {
   p <- p + ggplot2::geom_violin() #Add Violin plot visualisation
   return(p)
 }
+
+###----------3a
+# Difference in the medians between two groups.
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of a column of d containing the dependent variable, provided as a string
+# grouping_var: the name of a column of d containing a grouping variable, provided as a string
+# group1: the value of grouping_var that corresponds to the first group
+# group2: the value of grouping_var that corresponds to the second group
+#
+# RETURN VALUE:
+# The median value of var for the first group, minus the median value of var for the second
+# group.
+#
+difference_in_medians <- function(d, var, grouping_var, group1, group2) {
+  d_1 <- dplyr::filter(d, get(grouping_var) == group1) #Sorting the column we want to acces the data
+  d_2 <- dplyr::filter(d, get(grouping_var) == group2) #Same column sorting for group2
+  med_1 <- median(as.numeric(unlist(d_1[var]))) #Converting our column (list) into a vector
+  med_2 <- median(as.numeric(unlist(d_2[var]))) #And converting our vector in a numerical vector to be sure
+  result <- med_1 - med_2
+  return(result)
+}
+
+#It should give the following output:
+  ## [1] -0.2
+  ## [1] 0
