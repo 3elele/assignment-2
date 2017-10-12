@@ -74,7 +74,7 @@ We'll test this first question with the following chunk:
 print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
 ```
 
-### Question 2b:modifying plots
+### Question 2b: modifying plots
 
 This time we will just modify the last plot in order to add a main title and to change plot colours, thanks to the chunk you see here:
 
@@ -83,4 +83,22 @@ p <- grouped_violin_plot(iris, "Sepal.Length", "Species")
 p <- p + ggplot2::scale_fill_brewer(palette="Accent")
 p <- p + ggplot2::labs(title="Iris data")
 print(p)
+```
+
+## Exercise 3: Permutation tests
+
+As we did in Exercise 1, here we will add some new functions to our `functions.R` file and every new line will come with commentaries to explain what we wanted to obtain or what we do.
+
+### Question 3a: writing a more generic function for taking a test statistic
+
+Our first function calculate the difference between medians of a selected group. Median correspond to the middle value of a sequence, in our case of our column, but what happens when the sequence is unpair ? We take the two middle values and calculate the halfway between them, that's what happened to us, where our columns are length 50.  
+In **R** a built-in function provide to estimate the median value, but we had to do some adjustments before calling it because our column presented a String list of numeric values.  
+Once we did everything necessary to make possible our computing, we obtain :  
+
+* Versicolor median = 2.8  
+* Virginica median = 3.0  
+
+```{r}
+difference_in_medians(iris, "Sepal.Width", "Species", "versicolor", "virginica")
+difference_in_medians(iris, "Sepal.Width", "Species", "virginica", "virginica")
 ```
