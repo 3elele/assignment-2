@@ -102,3 +102,16 @@ Once we did everything necessary to make possible our computing, we obtain :
 difference_in_medians(iris, "Sepal.Width", "Species", "versicolor", "virginica")
 difference_in_medians(iris, "Sepal.Width", "Species", "virginica", "virginica")
 ```
+
+###Question 3b: writing a more generic function of the randomization (i.e., permutation) function
+
+```{r}
+iris$Sepal.Width[1:10]
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+randomize(iris, "Sepal.Width")$Sepal.Width[1:10]
+randomize(iris, "Species")$Species[1:10]
+randomize(iris, "Species")$Sepal.Width[1:10]
+set.seed(previous_seed)
+```
