@@ -80,7 +80,7 @@ This time we will just modify the last plot in order to add a main title and to 
 
 ```{r}
 p <- grouped_violin_plot(iris, "Sepal.Length", "Species")
-p <- p + ggplot2::geom_violin(fill = "green")
+p <- p + ggplot2::scale_fill_brewer(palette="Accent")
 p <- p + ggplot2::labs(title="Iris data")
 print(p)
 ```
