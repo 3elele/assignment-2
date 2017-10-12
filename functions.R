@@ -136,10 +136,33 @@ difference_in_medians <- function(d, var, grouping_var, group1, group2) {
   d_2 <- dplyr::filter(d, get(grouping_var) == group2) #Same column sorting for group2
   med_1 <- median(as.numeric(unlist(d_1[var]))) #Converting our column (list) into a vector
   med_2 <- median(as.numeric(unlist(d_2[var]))) #And converting our vector in a numerical vector to be sure
-  result <- med_1 - med_2
+  result <- med_1 - med_2 #Difference between the two medians applied to result variable
   return(result)
 }
-
 #It should give the following output:
   ## [1] -0.2
   ## [1] 0
+
+###----------3b
+# Randomize the order of a column.
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of a column of d containing the variable to randomize,
+#      provided as a string
+#
+# RETURN VALUE:
+# A data frame or tibble exactly the same as d, except with the order of
+# var permuted randomly.
+#
+randomize <- function(d, var) {
+  d[[var]] <- sample(d[[var]])
+  return(d)
+}
+#You should get the following output:
+  ##  [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1
+  ##  [1] 3.4 2.8 3.0 2.8 3.2 2.8 3.4 2.7 2.5 2.9
+  ##  [1] versicolor versicolor setosa     versicolor versicolor setosa
+  ##  [7] versicolor setosa     setosa     setosa
+  ## Levels: setosa versicolor virginica
+  ##  [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1
