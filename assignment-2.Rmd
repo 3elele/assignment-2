@@ -14,7 +14,7 @@ source("functions.R")
 
 You will find there all commentaries on functions, what they do and why.
 
-### Question 1a: filling in the blanks
+###Question 1a: filling in the blanks
 
 The codes below provide the results of the first filling.
 In order to verify the presence of numeric values in a certain column of the dataset and then to sum them all, an ```If``` condition was added to the function ```sum_column```:
@@ -25,7 +25,7 @@ print(sum_column(iris, "Species"))
 print(sum_column(warpbreaks, "breaks"))
 ```
 
-### Question 1b: a function with one argument and one return value
+###Question 1b: a function with one argument and one return value
 
 As a result of cheating on first filling by adding the built-in **R** ```sum()```, here we use a basic code to recreate a function which can do the sum for us. We test it using the code chunk below:
 
@@ -37,7 +37,7 @@ print(my_sum(warpbreaks$breaks))
 
 We lately add this function to the first one.
 
-### Question 1c: a function with two arguments and one return value
+###Question 1c: a function with two arguments and one return value
 
 This time we have a new function to make, it uses our sum function too and it divides the sum for a number. As done earlier here is a chunk in order to verify the result:
 
@@ -48,7 +48,7 @@ print(sum_divided_by(iris$Sepal.Length, "Not numeric"))
 print(sum_divided_by(warpbreaks$breaks, -12))
 ```
 
-### Question 1d: one more function
+###Question 1d: one more function
 
 Last function we create for this exercise calculates the mean of a vector not cheating using the built-in ```mean()```. Chunk below show the result:
 
@@ -66,7 +66,7 @@ Here we'll work with the ```ggplot``` package and as we did earlier all function
 source("functions.R")
 ```
 
-### Question 2a: creating violin plots
+###Question 2a: creating violin plots
 
 We'll test this first question with the following chunk:
 
@@ -74,7 +74,7 @@ We'll test this first question with the following chunk:
 print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
 ```
 
-### Question 2b: modifying plots
+###Question 2b: modifying plots
 
 This time we will just modify the last plot in order to add a main title and to change plot colours, thanks to the chunk you see here:
 
@@ -142,3 +142,38 @@ print(ptest_3)
 print(ptest_3$observed)
 print(ptest_3[["observed"]])
 ```
+
+###Question 3d
+
+So here we discuss, just a bit, the change we obtain if we take in account `var` or `grouping_var` for the permutation test inside our function explained in question 3c.  
+There is no better way to understand a result change than to see it, so here it is:
+
+```
+print(ptest_1)
+## $observed
+## [1] -0.2
+## 
+## $permuted
+##  [1] 0.00 0.10 0.00 0.00 0.00 0.05 0.00 0.00 0.00 0.05
+print(ptest_2)
+## $observed
+## [1] -0.2
+## 
+## $permuted
+##  [1]  0.10  0.00  0.00  0.00  0.00  0.00 -0.05 -0.10  0.05  0.10
+print(ptest_3)
+## $observed
+## [1] 0
+## 
+## $permuted
+##  [1]  0.10  0.00  0.00 -0.10 -0.10  0.10  0.00  0.00  0.10  0.05
+print(ptest_3$observed)
+## [1] 0
+print(ptest_3[["observed"]])
+## [1] 0
+```
+
+If the last two results remain the same, mostly beacause they acces a value which doesn't change, the `$observed`result, we can see a great change in all `$permuted` results. This is preatty understandable if we think to the difference between the values we access using the two variables we consider or `grouping_var`.  
+
+-  `var` give us the access to values contained in the "Sepal.Width" column in our case;  
+-  `grouping_var` is associated to the "Species" column.
