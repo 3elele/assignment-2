@@ -134,8 +134,8 @@ grouped_violin_plot <- function(d, var, grouping_var) {
 difference_in_medians <- function(d, var, grouping_var, group1, group2) {
   d_1 <- dplyr::filter(d, get(grouping_var) == group1) #Sorting the column we want to acces the data
   d_2 <- dplyr::filter(d, get(grouping_var) == group2) #Same column sorting for group2
-  med_1 <- median(as.numeric(unlist(d_1[var]))) #Converting our column (list) into a vector
-  med_2 <- median(as.numeric(unlist(d_2[var]))) #And converting our vector in a numerical vector to be sure
+  med_1 <- median(unlist(d_1[var])) #Converting our column (list) into a vector
+  med_2 <- median(unlist(d_2[var])) #And converting our vector in a numerical vector to be sure
   result <- med_1 - med_2 #Difference between the two medians applied to result variable
   return(result)
 }
@@ -166,3 +166,59 @@ randomize <- function(d, var) {
   ##  [7] versicolor setosa     setosa     setosa
   ## Levels: setosa versicolor virginica
   ##  [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1
+
+###----------3c
+# Perform a permutation test for two groups.
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of the column in d on which the test statistic will be calculated,
+#      provided as a string
+# grouping_var: the name of the column in d which gives the grouping
+# group1: the value of grouping_var corresponding to the first group
+# group2: the value of grouping_var corresponding to the second group
+# statistic: a function yielding a test statistic, which takes as input
+#            a data frame, the name of a variable on which to calculate the
+#            test statistic, the name of a grouping variable, the value of
+#            the grouping variable corresponding to the first group, and
+#            the value of the grouping variable corresponding to the second
+#            group
+# n_samples: the number of permutation samples to draw (default: 9999)
+#
+# RETURN VALUE:
+#
+# A list containing two elements:
+#
+#  - observed: the value of statistic() in d
+#  - permuted: a vector containing the values of statistic() under n_samples
+#              permutations
+#
+permutation_twogroups <- function(d, var, grouping_var, group1, group2, statistic,
+                                  n_samples=9999) {
+  observed_statistic <- statistic(d, var, grouping_var, group1, group2)
+  permutation_statistics <- rep(0, n_samples)
+  for (i in 1:n_samples) {
+    permutations <- randomize(d, var)
+    permutation_statistics[i] <- statistic(permutations, var, grouping_var, group1, group2) 
+  }
+  result <- list(observed=observed_statistic,
+                 permuted=permutation_statistics)
+  return(result)
+}
+#You should get the following output.
+  ## $observed
+  ## [1] -0.2
+  ## $permuted
+  ##  [1]  0.10 -0.05  0.00  0.00  0.00  0.00  0.00  0.00  0.10 -0.10
+  ##
+  ## $observed
+  ## [1] -0.2
+  ## $permuted
+  ##  [1]  0.00  0.00  0.00  0.00  0.05  0.00 -0.10  0.05  0.00 -0.05
+  ##
+  ## $observed
+  ## [1] 0
+  ## $permuted
+  ##  [1]  0.00  0.00  0.00  0.00  0.00  0.00 -0.05  0.00  0.00  0.00
+  ## [1] 0
+  ## [1] 0
