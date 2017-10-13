@@ -5,7 +5,7 @@ date: "10/9/2017"
 output: html_document
 ---
 
-## Exercise 1: Writing R functions
+##Exercise 1: Writing R functions
 
 All functions written for this assignment will be provided from the source file:
 ```{r}
@@ -58,7 +58,7 @@ print(my_mean(iris$Species))
 print(my_mean(warpbreaks$breaks))
 ```
 
-## Exercise 2: Working with ggplot
+##Exercise 2: Working with ggplot
 
 Here we'll work with the ```ggplot``` package and as we did earlier all functions and code will be provided in
 
@@ -85,11 +85,11 @@ p <- p + ggplot2::labs(title="Iris data")
 print(p)
 ```
 
-## Exercise 3: Permutation tests
+##Exercise 3: Permutation tests
 
 As we did in Exercise 1, here we will add some new functions to our `functions.R` file and every new line will come with commentaries to explain what we wanted to obtain or what we do.
 
-### Question 3a: writing a more generic function for taking a test statistic
+###Question 3a: writing a more generic function for taking a test statistic
 
 Our first function calculate the difference between medians of a selected group. Median correspond to the middle value of a sequence, in our case of our column, but what happens when the sequence is unpair ? We take the two middle values and calculate the halfway between them, that's what happened to us, where our columns are length 50.  
 In **R** a built-in function provide to estimate the median value, but we had to do some adjustments before calling it because our column presented a String list of numeric values.  
@@ -116,4 +116,29 @@ randomize(iris, "Sepal.Width")$Sepal.Width[1:10]
 randomize(iris, "Species")$Species[1:10]
 randomize(iris, "Species")$Sepal.Width[1:10]
 set.seed(previous_seed)
+```
+
+###Question 3c: a function to get a statistic for multiple permutations
+
+Next functions does a permutation for two groups of our dataset, we use here all others functions we wrote. This time it took a little more for me to understand how to familiarize with parameters, how to place them and variables inside the main function but it finally works:
+
+```{r}
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_1 <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+                                 "virginica", difference_in_medians,
+                                 n_samples=10)
+ptest_2 <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+                                 "virginica", difference_in_medians,
+                                 n_samples=10)
+ptest_3 <- permutation_twogroups(randomize(iris, "Sepal.Width"), "Sepal.Width",
+                                 "Species", "versicolor", "virginica",
+                                 difference_in_medians, n_samples=10)
+set.seed(previous_seed)
+print(ptest_1)
+print(ptest_2)
+print(ptest_3)
+print(ptest_3$observed)
+print(ptest_3[["observed"]])
 ```
