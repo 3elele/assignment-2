@@ -177,3 +177,24 @@ If the last two results remain the same, mostly beacause they acces a value whic
 
 -  `var` give us the access to values contained in the "Sepal.Width" column in our case;  
 -  `grouping_var` is associated to the "Species" column.
+
+###Question 3e: plotting the sampling distribution
+
+```{r echo=FALSE, cache=T}
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+                              "virginica", difference_in_medians)
+set.seed(previous_seed)
+```
+
+```{r echo=F}
+ptest_d_p <- tibble::as_tibble(ptest["permuted"])
+ptest_d_o <- tibble::as_tibble(ptest["observed"])
+plot_line_at_observed(ptest_d_p, ptest_d_o, "Permuted data plot")
+```
+
+We now observe the histogram of data we permuted earlier. We add a line to emphasise the value we also observed on our data.  
+Mostly we can say that the data has a sort of symmetric distribution basically around the value `0.0`. The value we observe corresponding to `-0.2` it seems really difficult for the two groups we take in account to be similar.
+
