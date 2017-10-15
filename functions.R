@@ -222,3 +222,24 @@ permutation_twogroups <- function(d, var, grouping_var, group1, group2, statisti
   ##  [1]  0.00  0.00  0.00  0.00  0.00  0.00 -0.05  0.00  0.00  0.00
   ## [1] 0
   ## [1] 0
+
+###----------3e
+# Create a bar plot for two groups.
+#
+# ARGUMENTS:
+# permuted: a permuted data frame or tibble
+# observed: the original data frame or tibble
+# title: the name of the plot
+#
+# RETURN VALUE:
+# A plot showing a line on the observed value
+#
+plot_line_at_observed <- function(permuted, observed, title) {
+  p <- ggplot2::ggplot(permuted, ggplot2::aes(x=permuted, y=..count..)) + #Create the base plot
+    ggplot2::geom_histogram(colour="black", fill="#FDD76D") +  #Creating histogram with a sort of yellow colour
+    ggplot2::xlim(-0.4, 0.3) + #Specifying the values to show on x axis
+    ggplot2::labs(title=title) #Adding the title
+  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=observed), colour="black") #Adding a continuos line on the observed value
+ 
+  print(p)
+}
