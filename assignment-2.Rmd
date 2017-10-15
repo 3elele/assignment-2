@@ -190,11 +190,85 @@ set.seed(previous_seed)
 ```
 
 ```{r echo=F}
-ptest_d_p <- tibble::as_tibble(ptest["permuted"])
-ptest_d_o <- tibble::as_tibble(ptest["observed"])
-plot_line_at_observed(ptest_d_p, ptest_d_o, "Permuted data plot")
+ptest_p <- tibble::as_tibble(ptest["permuted"])
+ptest_o <- tibble::as_tibble(ptest["observed"])
+plot_line_at_observed(ptest_p, ptest_o, "Permuted data plot")
 ```
 
 We now observe the histogram of data we permuted earlier. We add a line to emphasise the value we also observed on our data.  
 Mostly we can say that the data has a sort of symmetric distribution basically around the value `0.0`. The value we observe corresponding to `-0.2` it seems really difficult for the two groups we take in account to be similar.
 
+###Question 3f: test statistics
+
+```{r echo=FALSE, cache=T}
+#if(!exists(".Random.seed")) set.seed(NULL)
+#previous_seed <- .Random.seed
+#set.seed(1)
+#ptest_new <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+#                                   "virginica", new_test_statistic)
+#set.seed(previous_seed)
+```
+
+```{r}
+#ptest_new_p <- tibble::as_tibble(ptest["permuted"])
+#ptest_new_o <- tibble::as_tibble(ptest["observed"])
+#plot_line_at_observed(ptest_new_p, ptest_new_o, "Permuted data plot")
+```
+Here we will test a new kind of statistic.
+
+###Question 3g: calculating p-values
+
+```{r}
+permutation_pvalue_right(ptest)
+permutation_pvalue_left(ptest)
+```
+
+Let's take the example of ...
+... [SOME IMAGINED DATA WITH TWO GROUPS: IT COULD BE REACTION TIMES IN A SELF-PACED
+READING EXPERIMENT, OR IT COULD BE FLOWERS, IF YOU THINK YOU CAN MAKE UP HYPOTHESES
+ABOUT FLOWERS].
+We'd predict that the difference in the medians statistic would be extreme on the right
+side if our *Hypothesis B* were that ... [EXPLAIN A HYPOTHESIS UNDER WHICH THE PREDICTION
+WOULD BE TO HAVE LARGE VALUES OF difference_in_medians()].
+In which case, we would use the function ... [EITHER permutation_pvalue_left OR
+`permutation_pvalue_right`] ...
+... because ... .
+
+###Question 3h
+
+```{r echo=F, cache=T}
+#subset1
+iris_subset_1 <- iris[c(89:94, 108:112),]
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_sub1 <- permutation_twogroups(iris_subset_1, "Sepal.Width", "Species",
+                                    "versicolor", "virginica",
+                                    difference_in_medians)
+set.seed(previous_seed)
+ptest_sub1_p <- tibble::as_tibble(ptest_sub1["permuted"])
+ptest_sub1_o <- tibble::as_tibble(ptest_sub1["observed"])
+
+#subset2
+iris_subset_2 <- iris[88:114,]
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_sub2 <- permutation_twogroups(iris_subset_2, "Sepal.Width", "Species",
+                                    "versicolor", "virginica",
+                                    difference_in_medians)
+set.seed(previous_seed)
+ptest_sub2_p <- tibble::as_tibble(ptest_sub2["permuted"])
+ptest_sub2_o <- tibble::as_tibble(ptest_sub2["observed"])
+```
+
+We'll now create two new subsets of our data and proceed as earlier in permutation, we take an observed value and we plot everything in an histogram in order to discuss later. We will show every observed value in every histogram, thanks to our improved plot function:
+
+```{r echo=FALSE}
+plot_line_at_observed(ptest_sub1_p, ptest_o,
+                      "Subset 1 data plot",
+                      ptest_sub1_o, ptest_sub2_o)
+plot_line_at_observed(ptest_sub2_p, ptest_o,
+                      "Subset 2 data plot",
+                      ptest_sub1_o, ptest_sub2_o)
+```
