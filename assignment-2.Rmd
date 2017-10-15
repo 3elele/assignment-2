@@ -180,7 +180,7 @@ If the last two results remain the same, mostly beacause they acces a value whic
 
 ###Question 3e: plotting the sampling distribution
 
-```{r echo=FALSE, cache=T}
+```{r echo=F, cache=T}
 if(!exists(".Random.seed")) set.seed(NULL)
 previous_seed <- .Random.seed
 set.seed(1)
@@ -196,11 +196,11 @@ plot_line_at_observed(ptest_p, ptest_o, "Permuted data plot")
 ```
 
 We now observe the histogram of data we permuted earlier. We add a line to emphasise the value we also observed on our data.  
-Mostly we can say that the data has a sort of symmetric distribution basically around the value `0.0`. The value we observe corresponding to `-0.2` it seems really difficult for the two groups we take in account to be similar.
+Mostly we can say that the data has a sort of symmetric distribution basically around the value 0.0. The value we observe corresponding to -0.2 it seems really difficult for the two groups we take in account to be similar.
 
 ###Question 3f: test statistics
 
-```{r echo=FALSE, cache=T}
+```{r echo=F, cache=T}
 #if(!exists(".Random.seed")) set.seed(NULL)
 #previous_seed <- .Random.seed
 #set.seed(1)
@@ -223,16 +223,15 @@ permutation_pvalue_right(ptest)
 permutation_pvalue_left(ptest)
 ```
 
-Let's take the example of ...
-... [SOME IMAGINED DATA WITH TWO GROUPS: IT COULD BE REACTION TIMES IN A SELF-PACED
-READING EXPERIMENT, OR IT COULD BE FLOWERS, IF YOU THINK YOU CAN MAKE UP HYPOTHESES
-ABOUT FLOWERS].
-We'd predict that the difference in the medians statistic would be extreme on the right
-side if our *Hypothesis B* were that ... [EXPLAIN A HYPOTHESIS UNDER WHICH THE PREDICTION
-WOULD BE TO HAVE LARGE VALUES OF difference_in_medians()].
-In which case, we would use the function ... [EITHER permutation_pvalue_left OR
-`permutation_pvalue_right`] ...
-... because ... .
+- **Hypothesis A.** The two groups are drawn from equivalent sources of variability if we get a *p-value* "extreme" (a really small fraction) in positive or negative direction.  
+- **Hypothesis B.** Our obtained *p-values* are not "extreme" or just in a certain direction if the two groups are drawn from different sources of variability.
+
+Let's take the example of the surface form of the vowel "e" in italian, it corresponds to the phonemes /e/ and /ɛ/, we'd expect that all native speakers (taken from North and South regions) can make the two different realisations without problems because they are just two underlying forms in the phonological system of this language.  
+
+We'd predict that the difference in the medians statistic would be extreme on the right side if our *Hypothesis B* were that our dataset presents native speakers who makes the realisation of just one phoneme not or never realising the other for the vowel "e". In our *Hypothesis A* we would expect a normal distribution of the two realisations.  
+In which case, we would use the function `permutation_pvalue_left` or
+`permutation_pvalue_right` ?  
+If we assign two different median values to the two phonemes, based on their features or their distribution in language, we would consider the left value for a greater realisation of a phoneme, we say the /e/ one and the right one for the phoneme /ɛ/.
 
 ###Question 3h
 
@@ -264,11 +263,19 @@ ptest_sub2_o <- tibble::as_tibble(ptest_sub2["observed"])
 
 We'll now create two new subsets of our data and proceed as earlier in permutation, we take an observed value and we plot everything in an histogram in order to discuss later. We will show every observed value in every histogram, thanks to our improved plot function:
 
-```{r echo=FALSE}
+```{r echo=F}
 plot_line_at_observed(ptest_sub1_p, ptest_o,
                       "Subset 1 data plot",
                       ptest_sub1_o, ptest_sub2_o)
+```
+
+For this first subset the observed line is the first appearing on the plot, the brown line at -0.3, the median difference look greater here than on the other two datasets. We can also notice a more harmonic distribution of values compared to the first permuted set we observed earlier, here we don't have any symmetric distribution but great populations of values in different places.
+
+```{r echo=F}
 plot_line_at_observed(ptest_sub2_p, ptest_o,
                       "Subset 2 data plot",
                       ptest_sub1_o, ptest_sub2_o)
 ```
+
+Our second subset presents once again a different distribution both in median observation and in vlues themselves. We can see a slightly return of symmetrical representation with increasing values from (almost) -0.4 to almost (-0.2), a great decreasing count and an increaed one, we see the inverse path from little more than 0 to the last values.  
+Median value here is between -0.2 and -0.3, perfectly between the two preceeding subsets. As the original dataset is the same for the three examples, we can firmly assume that our three permutation really produced something interesting to observe, three subsets completely different which can lead us to confirm that the original set is composed of data which basically differ in characters and values (species, sepal width, etc.) from one another.
