@@ -201,20 +201,22 @@ Mostly we can say that the data has a sort of symmetric distribution basically a
 ###Question 3f: test statistics
 
 ```{r echo=F, cache=T}
-#if(!exists(".Random.seed")) set.seed(NULL)
-#previous_seed <- .Random.seed
-#set.seed(1)
-#ptest_new <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
-#                                   "virginica", new_test_statistic)
-#set.seed(previous_seed)
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_new <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+                                   "virginica", new_test_statistic)
+set.seed(previous_seed)
 ```
 
-```{r}
-#ptest_new_p <- tibble::as_tibble(ptest["permuted"])
-#ptest_new_o <- tibble::as_tibble(ptest["observed"])
-#plot_line_at_observed(ptest_new_p, ptest_new_o, "Permuted data plot")
+```{r echo=F}
+ptest_new_p <- tibble::as_tibble(ptest_new["permuted"])
+ptest_new_o <- tibble::as_tibble(ptest_new["observed"])
+plot_line_at_observed(ptest_new_p, ptest_new_o, "Permuted data plot")
 ```
-Here we will test a new kind of statistic.
+
+Here we will test a new kind of statistic. We'll take in account just the values corresponding to intersection of the two groups in the dataset we analize. It would appear interesting to see how the common values change from a subset to another, this could be lead us to consider some more fundamental values which for example remain the same in all permutations or can reveal which permutation lose every link to values with the preceeding ones.  
+In our case for exemple we see that value 0 is the one which doesn't change in the new set we take.
 
 ###Question 3g: calculating p-values
 
