@@ -262,9 +262,13 @@ plot_line_at_observed <- function(permuted, observed,
 # group2: the value of grouping_var that corresponds to the second group
 #
 # RETURN VALUE:
+# the function return a number corresponding to the common points between our two datalists
 # 
 new_test_statistic <- function(d, var, grouping_var, group1, group2) {
-  
+  d_1 <- dplyr::filter(d, get(grouping_var) == group1)
+  d_2 <- dplyr::filter(d, get(grouping_var) == group2)
+  result <- length(intersect(d_1, d_2))
+  return(result)
 }
 
 ###----------3g
