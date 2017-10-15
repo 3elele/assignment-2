@@ -223,7 +223,7 @@ permutation_twogroups <- function(d, var, grouping_var, group1, group2, statisti
   ## [1] 0
   ## [1] 0
 
-###----------3e
+###----------3e-h
 # Create a bar plot for two groups.
 #
 # ARGUMENTS:
@@ -234,12 +234,57 @@ permutation_twogroups <- function(d, var, grouping_var, group1, group2, statisti
 # RETURN VALUE:
 # A plot showing a line on the observed value
 #
-plot_line_at_observed <- function(permuted, observed, title) {
+plot_line_at_observed <- function(permuted, observed,
+                                  title,
+                                  line1=F, line2=F) {
   p <- ggplot2::ggplot(permuted, ggplot2::aes(x=permuted, y=..count..)) + #Create the base plot
     ggplot2::geom_histogram(colour="black", fill="#FDD76D") +  #Creating histogram with a sort of yellow colour
     ggplot2::xlim(-0.4, 0.3) + #Specifying the values to show on x axis
     ggplot2::labs(title=title) #Adding the title
   p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=observed), colour="black") #Adding a continuos line on the observed value
- 
+  if (line1 != F) {
+    p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=line1), colour="brown") #Add a brown line for a second observed value
+    if (line2 != F) {
+      p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=line2), colour="green") #Add a green line for a third observed value
+      }
+    }
   print(p)
+}
+
+###----------3f
+# New random statistic to test our dataset.
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of a column of d containing the dependent variable, provided as a string
+# grouping_var: the name of a column of d containing a grouping variable, provided as a string
+# group1: the value of grouping_var that corresponds to the first group
+# group2: the value of grouping_var that corresponds to the second group
+#
+# RETURN VALUE:
+# 
+new_test_statistic <- function(d, var, grouping_var, group1, group2) {
+  
+}
+
+###----------3g
+# Analize greater and smaller values of an observed one.
+#
+# ARGUMENTS:
+# p: a data list
+# 
+# RETURN VALUE:
+# the proportion of observations that are greater than or less than
+# the observed value of the test statistic
+# plus a slight adjustment to resolve the inaccuracy that would exist
+#
+permutation_pvalue_right <- function(p) {
+  n_above <- sum(p$permuted >= p$observed)
+  n_samples <- length(p$permuted)
+  return((n_above + 1)/(n_samples + 1))
+}
+permutation_pvalue_left <- function(p) {
+  n_below <- sum(p$permuted <= p$observed)
+  n_samples <- length(p$permuted)
+  return((n_below + 1)/(n_samples + 1))
 }
